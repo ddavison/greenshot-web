@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+
+# redirect former german page to german landing page
+RewriteEngine On
+RewriteCond %{QUERY_STRING} locale=de
+RewriteRule ^(.*) http://getgreenshot.org/de/? [R=301,L]
+
+# redirect external links to support page
+RewriteEngine On
+RewriteCond %{QUERY_STRING} page=support
+RewriteRule ^(.*) http://getgreenshot.org/support/? [R=301,L]
+
+# redirect anything (e.g. greenshot.sourceforge.net) to getgreenshot.org
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^getgreenshot\.org$
+RewriteRule .* http://getgreenshot.org/ [R=301,L]
+
+# current version check
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^current.*$ /version-check.php [L]
+
+# wordpress default
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
